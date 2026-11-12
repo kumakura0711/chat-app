@@ -50,8 +50,12 @@ ActiveRecord::Schema[7.1].define(version: 2026_11_11_004413) do
   end
 
   create_table "room_users", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_room_users_on_room_id"
+    t.index ["user_id"], name: "index_room_users_on_user_id"
   end
 
   create_table "rooms", charset: "utf8mb3", force: :cascade do |t|
@@ -77,4 +81,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_11_11_004413) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "messages", "rooms"
   add_foreign_key "messages", "users"
+  add_foreign_key "room_users", "rooms"
+  add_foreign_key "room_users", "users"
 end
